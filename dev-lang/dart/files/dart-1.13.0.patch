@@ -24,3 +24,13 @@
  
  #include <openssl/bio.h>
  #include <openssl/err.h>
+--- dart/tools/gyp/configurations.gypi.old	2016-01-03 23:33:47.371806012 +0100
++++ dart/tools/gyp/configurations.gypi	2016-01-03 23:34:31.371152638 +0100
+@@ -8,6 +8,7 @@
+       '-Wall',
+       '-Wextra', # Also known as -W.
+       '-Wno-unused-parameter',
++      '-Wno-unused-variable',
+     ],
+ 
+     # Default value.  This may be overridden in a containing project gyp.
