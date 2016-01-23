@@ -1,7 +1,7 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-inherit gyp-utils eutils python-r1
+inherit flag-o-matic gyp-utils eutils python-r1
 
 DART_OPTIONAL="analysis_server dartanalyzer"
 
@@ -56,23 +56,23 @@ src_prepare() {
     rm -R third_party/* || die
     mv third_party_tmp/* third_party/ || die
     
-    epatch "${FILESDIR}/${P}.patch"
+    epatch "${FILESDIR}/${PN}-1.13.0.patch"
     epatch "${FILESDIR}/${PN}-system-zlib.patch"
     epatch "${FILESDIR}/${PN}-fortify.patch"
 }
 
 src_configure() {
-	python_setup
+    python_setup
     mygypargs="-I tools/gyp/all.gypi"
     for t in ${DART_TARGETS} ; do
         mygypargs+=" --root-target=${t}"
-	done
+    done
     gyp-utils_src_configure
 }
 
 src_compile() {
     cd ${BUILD_DIR}
-    emake BUILDTYPE="${BUILD_TARGET}" V=1 
+    emake BUILDTYPE="${BUILD_TARGET}" V=1  -j1
 }
 
 src_install() {
