@@ -1,0 +1,52 @@
+--- dart/runtime/bin/secure_socket.cc	2015-03-21 12:00:08.795532214 +0100
++++ dart/runtime/bin/secure_socket.cc	2015-03-21 11:56:29.369045550 +0100
+@@ -665,6 +665,40 @@
+ }
+ 
+ 
++static CERTCertificate *
++FindCertByNameString(CERTCertDBHandle *handle, char *nameStr)
++{
++    CERTName *name;
++    SECItem *nameItem;
++    CERTCertificate *cert = NULL;
++    PLArenaPool *arena = NULL;
++    
++    arena = PORT_NewArena(DER_DEFAULT_CHUNKSIZE);
++    
++    if ( arena == NULL ) {
++	goto loser;
++    }
++    
++    name = CERT_AsciiToName(nameStr);
++    
++    if ( name ) {
++	nameItem = SEC_ASN1EncodeItem (arena, NULL, (void *)name,
++				       CERT_NameTemplate);
++	if ( nameItem != NULL ) {
++            cert = CERT_FindCertByName(handle, nameItem);
++	}
++	CERT_DestroyName(name);
++    }
++
++loser:
++    if ( arena ) {
++	PORT_FreeArena(arena, PR_FALSE);
++    }
++    
++    return(cert);
++}
++
++
+ void SSLFilter::Connect(const char* host_name,
+                         RawAddr* raw_addr,
+                         int port,
+@@ -740,7 +774,7 @@
+         ThrowPRException("CertificateException",
+                          "Certificate database cannot be loaded");
+       }
+-      certificate = CERT_FindCertByNameString(certificate_database,
++      certificate = FindCertByNameString(certificate_database,
+           const_cast<char*>(certificate_name));
+       if (certificate == NULL) {
+         ThrowCertificateException(
