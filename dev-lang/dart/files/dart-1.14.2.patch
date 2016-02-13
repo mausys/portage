@@ -1,0 +1,55 @@
+--- dart/runtime/bin/bin.gypi.old	2015-12-11 01:35:45.642659037 +0100
++++ dart/runtime/bin/bin.gypi	2015-12-11 01:37:53.250788470 +0100
+@@ -297,9 +297,9 @@
+       ],
+       'conditions': [
+         ['dart_io_support==1', {
+-          'dependencies': [
+-            'bin/zlib.gyp:zlib_dart',
+-          ],
++          'link_settings': {
++            'libraries': [ '-lz' ],
++          },
+         }],
+         ['dart_io_support==1 and dart_io_secure_socket==1', {
+           'dependencies': [
+--- dart/third_party/boringssl/src/crypto/bio/socket_helper.c.old	2015-12-11 02:57:53.318984528 +0100
++++ dart/third_party/boringssl/src/crypto/bio/socket_helper.c	2015-12-11 02:57:56.328939391 +0100
+@@ -12,7 +12,7 @@
+  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. */
+ 
+-#define _POSIX_SOURCE
++#define POSIX_SOURCE
+ 
+ #include <openssl/bio.h>
+ #include <openssl/err.h>
+--- dart/tools/gyp/configurations.gypi.old	2016-01-03 23:33:47.371806012 +0100
++++ dart/tools/gyp/configurations.gypi	2016-01-03 23:34:31.371152638 +0100
+@@ -8,6 +8,7 @@
+       '-Wall',
+       '-Wextra', # Also known as -W.
+       '-Wno-unused-parameter',
++      '-Wno-unused-variable',
+     ],
+ 
+     # Default value.  This may be overridden in a containing project gyp.
+--- dart/runtime/bin/main.cc.orig	2016-02-13 21:40:34.410278426 +0100
++++ dart/runtime/bin/main.cc	2016-02-13 21:41:02.209813888 +0100
+@@ -5,6 +5,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <stdio.h>
++#include <zlib.h>
+ 
+ #include "include/dart_api.h"
+ #include "include/dart_tools_api.h"
+@@ -26,7 +27,7 @@
+ #include "platform/globals.h"
+ #include "platform/hashmap.h"
+ #include "platform/text_buffer.h"
+-#include "zlib/zlib.h"
++
+ 
+ namespace dart {
+ namespace bin {
