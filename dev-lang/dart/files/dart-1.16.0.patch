@@ -1,0 +1,11 @@
+--- dart/pkg/analyzer/tool/summary/build_sdk_summaries.dart.orig	2016-05-02 20:57:17.921612416 +0200
++++ dart/pkg/analyzer/tool/summary/build_sdk_summaries.dart	2016-05-02 20:58:00.419288742 +0200
+@@ -199,6 +199,8 @@
+     //
+     for (String uri in uriSet) {
+       Source libSource = sdk.mapDartUri(uri);
++      if (libSource == null)
++        continue;
+       _serializeLibrary(libSource);
+     }
+     //

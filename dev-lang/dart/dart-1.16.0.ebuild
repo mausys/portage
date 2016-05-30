@@ -13,10 +13,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="${DART_OPTIONAL} debug"
 #DART_REVISION="3211fb1"
 SRC_URI="http://commondatastorage.googleapis.com/dart-archive/channels/stable/raw/${PV}/src/${P}.tar.gz"
-
-
-RDEPEND="sys-libs/zlib
-         dev-libs/nss"
+RDEPEND=""
 
 DEPEND="${RDEPEND}"
 
@@ -26,7 +23,7 @@ DART_TARGETS="create_sdk dart2js runtime"
 GYP_BUILD_FILE="dart.gyp"
 BUILD_TARGET="Release"
 S_DART="${S}/${PN}"
-THIRD_PARTY="pkg pkg_tested observatory_pub_packages root_certificates boringssl"
+THIRD_PARTY="zlib pkg pkg_tested observatory_pub_packages root_certificates boringssl"
 
 pkg_setup() {
     for t in ${DART_OPTIONAL} ; do
@@ -57,7 +54,7 @@ src_prepare() {
     mv third_party_tmp/* third_party/ || die
     
     epatch "${FILESDIR}/${PN}-1.13.0.patch"
-    epatch "${FILESDIR}/${PN}-system-zlib.patch"
+    epatch "${FILESDIR}/${PN}-1.16.0.patch"
     epatch "${FILESDIR}/${PN}-fortify.patch"
 }
 
@@ -78,10 +75,7 @@ src_compile() {
 src_install() {
     local out=${BUILD_DIR}/${BUILD_TARGET}
     local instdir=/usr/$(get_libdir)/dart-sdk
-    local bins="dart dart2js dartdoc dartfmt pub"
-    
-    use dartanalyzer && bins+=" dartanalyzer"
-    
+    local bins="dart dart2js dartdoc dartfmt pub dartanalyzer"
     insinto ${instdir}
     doins -r ${out}/dart-sdk/*
     for b in ${bins} ; do
