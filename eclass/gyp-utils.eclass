@@ -58,7 +58,9 @@ esac
 
 
 
-DEPEND="${GYPDEPEND}"
+DEPEND="dev-util/gyp
+        ${GYPDEPEND}"
+
 unset GYPDEPEND
 
 # @ECLASS-VARIABLE: BUILD_DIR
