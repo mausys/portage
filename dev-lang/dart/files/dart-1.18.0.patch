@@ -1,0 +1,11 @@
+--- dart/pkg/analyzer/lib/src/summary/summary_file_builder.dart.orig	2016-08-02 21:55:46.497895174 +0200
++++ dart/pkg/analyzer/lib/src/summary/summary_file_builder.dart	2016-08-02 21:56:15.990495058 +0200
+@@ -189,6 +189,8 @@
+     // Serialize each source.
+     //
+     for (Source source in librarySources) {
++	  if(source == null)
++	    continue;
+       _serializeLibrary(source);
+     }
+     //
