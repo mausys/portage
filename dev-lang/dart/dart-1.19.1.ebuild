@@ -53,7 +53,7 @@ src_prepare() {
     rm -R third_party/* || die
     mv third_party_tmp/* third_party/ || die
     
-    epatch "${FILESDIR}/${PN}-1.13.0.patch"
+    epatch "${FILESDIR}/${PN}-1.18.0.patch"
     epatch "${FILESDIR}/${PN}-fortify.patch"
 }
 
