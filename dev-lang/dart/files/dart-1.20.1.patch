@@ -1,0 +1,11 @@
+--- dart/third_party/boringssl/boringssl_dart.gyp.orig	2016-11-01 21:30:15.319848884 +0100
++++ dart/third_party/boringssl/boringssl_dart.gyp	2016-11-01 21:31:12.843682420 +0100
+@@ -42,7 +42,7 @@
+             '<@(boringssl_linux_aarch64_sources)',
+           ],
+           'defines': [
+-            '_BSD_SOURCE',
++            '_DEFAULT_SOURCE',
+             '_XOPEN_SOURCE=700',
+           ],
+         }],

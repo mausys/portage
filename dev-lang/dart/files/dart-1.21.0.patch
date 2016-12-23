@@ -1,0 +1,18 @@
+--- dart/utils/dartanalyzer/dartanalyzer.gyp.orig	2016-12-23 20:37:16.669550820 +0100
++++ dart/utils/dartanalyzer/dartanalyzer.gyp	2016-12-23 20:38:29.817181041 +0100
+@@ -45,6 +45,7 @@
+             '../../pkg/analyzer/tool/summary/build_sdk_summaries.dart',
+             'build-spec',
+             '<(SHARED_INTERMEDIATE_DIR)/spec.sum',
++            '../../sdk',
+           ],
+         },
+         {
+@@ -63,6 +64,7 @@
+             '../../pkg/analyzer/tool/summary/build_sdk_summaries.dart',
+             'build-strong',
+             '<(SHARED_INTERMEDIATE_DIR)/strong.sum',
++            '../../sdk',
+           ],
+         },
+       ],
