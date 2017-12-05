@@ -4,8 +4,8 @@ PYTHON_COMPAT=( python2_7 )
 inherit eutils python-any-r1
 
 
-DESCRIPTION="Generate Your Projects"
-HOMEPAGE="http://code.google.com/p/gyp/"
+DESCRIPTION="GN is a meta-build system that generates Ninja build files"
+HOMEPAGE="https://chromium.googlesource.com/chromium/src/+/master/tools/gn"
 
 
 LICENSE="BSD"
