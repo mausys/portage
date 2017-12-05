@@ -18,7 +18,8 @@ RDEPEND=">=sys-devel/clang-5
 DEPEND="dev-util/gn
 		${RDEPEND}"
 
-S_DART="${S}/${PN}"        
+S_DART="${S}/${PN}"  
+BUILD_DIR="${S}/out"     
 
 llvm_check_deps() {
         has_version "sys-devel/clang:${LLVM_SLOT}"
@@ -33,9 +34,9 @@ src_prepare() {
     default
 }
 
-src_compile() {
-	mkdir out
-	cd out
+src_configure() {
+	mkdir ${BUILD_DIR}
+	cd ${BUILD_DIR}
 	cat <<- EOF > args.gn
 		llvm_prefix = "$(get_llvm_prefix)"                                                                                                                                                               
 		host_cpu="x64"    
@@ -60,16 +61,19 @@ src_compile() {
 		dart_host_pub_exe="" 
 		dart_snapshot_kind="app-jit" 
 	EOF
-	gn gen . --root=../dart
+	gn gen . --root=${S_DART}
+}
+
+src_compile() {
+	cd ${BUILD_DIR}
 	eninja all
 }
 
 src_install() {
-    local out=${S}/out
     local instdir=/usr/$(get_libdir)/dart-sdk
     local bins="dart dartdevc dart2js dartdoc dartfmt pub dartanalyzer"
     insinto ${instdir}
-    doins -r ${out}/dart-sdk/*
+    doins -r ${BUILD_DIR}/dart-sdk/*
     for b in ${bins} ; do
         fperms 0775 ${instdir}/bin/${b}
 		dosym ${instdir}/bin/${b} /usr/bin/${b}
