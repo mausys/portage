@@ -1,8 +1,8 @@
 EAPI=7
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_9 )
 
 inherit flag-o-matic eutils python-r1 llvm ninja-utils
-LLVM_MAX_SLOT=10
+LLVM_MAX_SLOT=11
 
 
 DESCRIPTION="Dart is a cohesive, scalable platform for building apps"
@@ -24,17 +24,18 @@ BUILD_DIR="${S}/out"
 
 
 src_prepare() {
-    cd ${S}
-    rm -R debian
-    cd ${S_DART}
-    rm -R buildtools
-    rm -R build/linux/debian*
+	cd ${S}
+	rm -R debian
+	cd ${S_DART}
+	rm -R buildtools
+	rm -R build/linux/debian*
 	rm -Rf third_party/fuchsia/
 	rm -Rf third_party/llvm-build
 
-#    rm -R sdk
-    eapply "${FILESDIR}/${P}.patch"
-    default
+#rm -R sdk
+	eapply "${FILESDIR}/${P}.patch"
+	eapply "${FILESDIR}/${P}-python3.patch"
+	default
 }
 
 src_configure() {
