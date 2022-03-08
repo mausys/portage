@@ -1,0 +1,29 @@
+--- a/src/runtime.839cdfb0ecca5e0be3dbccd926e7651ef50fdf10/eng/native/init-distro-rid.sh	2022-02-14 14:25:29.000000000 -0000
++++ b/src/runtime.839cdfb0ecca5e0be3dbccd926e7651ef50fdf10/eng/native/init-distro-rid.sh	2022-03-08 00:04:56.934346176 -0000
+@@ -50,6 +50,8 @@
+                         # Rolling release distros do not set VERSION_ID, so omit
+                         # it here to be consistent with everything else.
+                         nonPortableBuildID="${ID}-${buildArch}"
++                elif [ "${ID}" = "gentoo" ]; then
++                        nonPortableBuildID="${ID}-${buildArch}"
+                 else
+                         nonPortableBuildID="${ID}.${VERSION_ID}-${buildArch}"
+                 fi
+@@ -89,6 +91,8 @@
+         __uname_version=$(uname -v)
+         __solaris_major_version=$(echo "${__uname_version%.*}")
+         nonPortableBuildID=solaris."$__solaris_major_version"-"$buildArch"
++    elif [ "$targetOs" = "gentoo" ]; then
++        nonPortableBuildID=gentoo-"$buildArch"
+     fi
+ 
+     if [ -n "${nonPortableBuildID}" ]; then
+@@ -190,6 +194,8 @@
+                 distroRid="illumos-$buildArch"
+             elif [ "$targetOs" = "Solaris" ]; then
+                 distroRid="solaris-$buildArch"
++            elif [ "$targetOs" = "gentoo" ]; then
++                distroRid="gentoo-$buildArch"
+             fi
+         fi
+ 
