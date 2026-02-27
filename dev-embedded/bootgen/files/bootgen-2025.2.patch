@@ -1,0 +1,8 @@
+--- a/lms-hash-sigs/hss_param.c	2026-02-18 11:55:19.314930821 -0000
++++ b/lms-hash-sigs/hss_param.c	2026-02-18 11:55:30.869132448 -0000
+@@ -1,4 +1,5 @@
+ #include <string.h>
++#include <stdio.h>
+ #include "hss.h"
+ #include "hss_internal.h"
+ #include "endian.h"
